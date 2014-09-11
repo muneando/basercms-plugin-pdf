@@ -27,6 +27,14 @@ class PdfConfigsController extends PdfAppController {
 	public $uses = array('Pdf.PdfConfig', 'Blog.BlogPost', 'Blog.BlogContent');
 	
 /**
+ * コンポーネント
+ *
+ * @var array
+ * @access public
+ */
+	public $components = array('BcAuth', 'Cookie');
+
+/**
  * ぱんくずナビ
  *
  * @var string
@@ -49,6 +57,12 @@ class PdfConfigsController extends PdfAppController {
  */
 	public function beforeFilter() {		
 		parent::beforeFilter();
+		
+		/* 認証設定 */
+		$this->BcAuth->allow(
+				'posts'
+		);
+
 		$this->BlogContent->recursive = -1;
 		if ($this->contentId) {
 			$this->blogContent = $this->BlogContent->read(null, $this->contentId);
