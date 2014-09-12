@@ -16,7 +16,7 @@
  */
 ?>
 <?php if ($posts): ?>
-	<ul class="post-list">
+	<ul class="PdfList post-list">
 		<?php foreach ($posts as $key => $post): ?>
 			<?php $class = array('post-' . ($key + 1)) ?>
 			<?php if ($this->BcArray->first($posts, $key)): ?>
@@ -25,8 +25,8 @@
 				<?php $class[] = 'last' ?>
 			<?php endif ?>
 			<li class="<?php echo implode(' ', $class) ?>">
-				<span class="date"><?php $this->Blog->postDate($post, 'Y.m.d') ?></span>
-				<span class="title"><?php $this->Pdf->postTitle($post) ?></span>
+				<div class="title"><?php $this->Pdf->postTitle($post) ?></div>
+				<div class="date"><?php $this->Blog->postDate($post, 'Y.m.d') ?></div>
 			</li>
 		<?php endforeach; ?>
 	</ul>
