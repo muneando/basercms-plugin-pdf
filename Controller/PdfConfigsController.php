@@ -179,6 +179,7 @@ class PdfConfigsController extends PdfAppController {
 										)
 								),			
 							),
+						'order' => array('posts_date DESC'),
 						'limit' => $limit
 				)
 		);
