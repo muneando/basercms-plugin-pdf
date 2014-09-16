@@ -169,10 +169,7 @@ class PdfConfigsController extends PdfAppController {
 		if($this->request->params['named']['year']) {
 			$conditions["YEAR(BlogPost.posts_date)"] = $this->request->params['named']['year'];
 		}
-		
-		$datas = $this->BlogPost->find(
-				'all',
-				array(
+		$params = array(
 						'conditions' => $conditions,
 						'joins' => array(
 								array('table' => 'pdf_configs',
@@ -185,7 +182,14 @@ class PdfConfigsController extends PdfAppController {
 							),
 						'order' => array('posts_date DESC'),
 						'limit' => $limit
-				)
+				);
+		if ($limit > 0) {
+			$params['limit'] = $limit;
+		}
+		
+		$datas = $this->BlogPost->find(
+				'all',
+				$params
 		);
 		$this->set('posts', $datas);
 		$this->render($this->blogContent['BlogContent']['template'] . DS . $template);
