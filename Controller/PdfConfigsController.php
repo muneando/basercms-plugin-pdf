@@ -243,7 +243,10 @@ class PdfConfigsController extends PdfAppController {
 		}
 	}
 	
-	public function ajax_posts($blogContentId, $year=null) {
-		$this->posts($blogContentId);
+	public function ajax_postsForYear($blogContentId, $year) {
+		$this->layout = 'ajax';		
+		$options = array('year' => $year);
+		$url = array('admin' => false, 'plugin' => 'pdf', 'controller' => 'pdfConfigs', 'action' => 'posts');
+		$this->set('element', $this->requestAction($url, array('pass' => array($blogContentId, 0), 'named' => $options)));
 	}
 }
