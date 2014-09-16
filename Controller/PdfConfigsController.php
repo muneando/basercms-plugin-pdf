@@ -166,6 +166,10 @@ class PdfConfigsController extends PdfAppController {
 		);
 		$conditions = am($conditions, $this->BlogPost->getConditionAllowPublish());
 		
+		if($this->request->params['named']['year']) {
+			$conditions["YEAR(BlogPost.posts_date)"] = $this->request->params['named']['year'];
+		}
+		
 		$datas = $this->BlogPost->find(
 				'all',
 				array(
