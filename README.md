@@ -41,16 +41,66 @@ PDFファイルが設定されていない場合は、ブログ記事の表示�
 指定されたブログのコンテンツIDで指定して、PDFファイルにリンクしたタイトル一覧を表示します。
 
 ```
-$this->BcBaser->pdfTilteList($contentsName, [$num])
+$this->BcBaser->pdfTilteList($contentsName, [$num]，[$options])
+```
 
-・ string $contents プログコンテンツ名をアルファベットで指定します。
-
-・ int $num 記事件数　初期値：5
+* string $contents プログコンテンツ名をアルファベットで指定します。
+* int $num 記事件数。初期値：5。 0を指定するとすべての記事を表示します。
+* array $options 抽出条件を仮想配列で指定する。
+ * year 年で抽出する。4桁の年を指定する。
 
 例）
-
-<?php $this->BcBaser->pdfTilteList('news') ?>
 ```
+<?php $this->BcBaser->pdfTilteList('news', 10, array('year' => 2014)) ?>
+```
+
+### Ajaxでの更新
+
+Ajaxでの更新を行うための年ごとにブログタイトルを取得するアクションを用意しました。
+
+```
+/pdf/pdfConfigs/ajax_postsForYear/[コンテンツID]/[年]
+```
+
+* コンテンツID int ブログのコンテンツIDを指定します。
+* 年 int　抽出する年を指定します。
+
+例）年ごとのバックナンバーリンクを用意して、クリックするとタイトル一覧を更新します。
+```
+<?php $this->Html->scriptStart(array('inline'=>false)); ?>
+$(function() {
+	$(".linkBackNumber").on('click', function(){
+		var year = $(this).attr('year');
+		$.ajax({
+			url: "/pdf/pdfConfigs/ajax_postsForYear/2/" + year,
+		}).done(function(data){
+			$('#AjaxList').html(data);
+		}).fail(function(data){
+			alert('エラーが発生しました。');
+		});
+	});
+});
+<?php $this->Html->scriptEnd(); ?>
+
+<div id="AjaxList">
+<?php $this->BcBaser->pdfTilteList('news', 0, array('year' => date("Y"))); ?>
+</div>
+
+<h3>バックナンバー</h3>
+
+<ul id="Backnumber">
+<?php
+$start = 2000;
+$end = date("Y");
+for ($i = $end; $i >= $start; $i--) {
+?>
+	<li><?php $this->BcBaser->link($i . '年', 'javascript:viod()', array('class' => 'linkBackNumber', 'year' => $i)); ?></li>
+<?php
+}
+?>
+</ul>
+```
+
 
 ## 謝辞
 
