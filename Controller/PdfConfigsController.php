@@ -60,7 +60,8 @@ class PdfConfigsController extends PdfAppController {
 		
 		/* 認証設定 */
 		$this->BcAuth->allow(
-				'posts'
+				'posts',
+				'ajax_postsForYear'
 		);
 
 		$this->BlogContent->recursive = -1;
