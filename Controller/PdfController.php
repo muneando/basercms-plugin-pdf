@@ -104,7 +104,7 @@ class PdfController extends PdfAppController {
 						$this->setMessage('PDFファイルをアップロードしたときに、何か障害が発生しました。', true);
 					}
 					if(is_uploaded_file($pdfFile['tmp_name'])) {
-						$imagePath = APP . 'Upload' . DS . 'pdf' . DS;
+						$imagePath = Configure::read('Pdf.upload_dir');
 						debug($pdfFile);
 						if (move_uploaded_file($pdfFile["tmp_name"],  $imagePath . $pdfFile['name'] )) {
 							chmod($imagePath . $pdfFile['name'], 0644);
@@ -243,7 +243,7 @@ class PdfController extends PdfAppController {
 	private function _showPdf($pdfFile) {
 		$this->autoRender = false; // Viewを使わないように
 		Configure::write('debug', 0); // debugコードを出さないように
-		$path_name = APP . 'Upload' . DS . 'pdf' . DS . $pdfFile;
+		$path_name = Configure::read('Pdf.upload_dir');
 		if( is_file($path_name) ){
 			$fp = fopen($path_name, 'rb');
 			$pdf = fread($fp, filesize($path_name));

@@ -7,7 +7,5 @@
  * @package			Pdf
  * @license			MIT
  */
-/**
- * ラベル設定
- */
-//$config['Pdf.label.name'] = 'H1テキスト';
+
+$config['Pdf.upload_dir'] = APP . 'Upload' . DS . 'pdf' . DS;
