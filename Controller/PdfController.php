@@ -243,7 +243,7 @@ class PdfController extends PdfAppController {
 	private function _showPdf($pdfFile) {
 		$this->autoRender = false; // Viewを使わないように
 		Configure::write('debug', 0); // debugコードを出さないように
-		$path_name = Configure::read('Pdf.upload_dir');
+		$path_name = Configure::read('Pdf.upload_dir') . $pdfFile;
 		if( is_file($path_name) ){
 			$fp = fopen($path_name, 'rb');
 			$pdf = fread($fp, filesize($path_name));

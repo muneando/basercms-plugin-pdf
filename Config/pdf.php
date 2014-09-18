@@ -28,3 +28,5 @@ if (BcUtil::isAdminUser()) {
  * ラベル設定
  */
 $config['Pdf.label.name'] = 'カスタムテキスト';
+
+$config['Pdf.upload_dir'] = APP . 'Upload' . DS . 'pdf' . DS;
