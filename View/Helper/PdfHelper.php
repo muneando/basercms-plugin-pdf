@@ -74,8 +74,8 @@ class PdfHelper extends AppHelper {
 	 * @param array $post
 	 * @return void
 	 */
-	public function postTitle($post, $link = true) {
-		echo $this->getPostTitle($post, $link);
+	public function postTitle($post, $link = true, $options = array()) {
+		echo $this->getPostTitle($post, $link, $options);
 	}
 	
 	/**
@@ -86,9 +86,9 @@ class PdfHelper extends AppHelper {
 	 * @return string
 	 * @access public
 	 */
-	public function getPostTitle($post, $link = true) {
+	public function getPostTitle($post, $link = true, $options = array()) {
 		if ($link) {
-			return $this->getPostLink($post, $post['BlogPost']['name']);
+			return $this->getPostLink($post, $post['BlogPost']['name'], $options);
 		} else {
 			return $post['BlogPost']['name'];
 		}

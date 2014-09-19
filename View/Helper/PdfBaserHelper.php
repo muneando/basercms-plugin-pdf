@@ -31,17 +31,9 @@ class PdfBaserHelper extends AppHelper {
 	 */
 	public function pdfTilteList($contentsName, $num = 5, $options = array()) {
 		$options = array_merge(array(
-				'category' => null,
-				'tag' => null,
 				'year' => null,
-				'month' => null,
-				'day' => null,
-				'id' => null,
-				'keyword' => null,
 				'template' => null,
-				'direction' => null,
-				'page' => null,
-				'sort' => null
+				'target' => null
 		), $options);
 	
 		$BlogContent = ClassRegistry::init('Blog.BlogContent');

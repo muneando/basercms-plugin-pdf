@@ -14,6 +14,10 @@
  * @since			baserCMS v 0.1.0
  * @license			http://basercms.net/license/index.html
  */
+$options = array();
+if($target) {
+	$options = array('target' => $target);
+}
 ?>
 <?php if ($posts): ?>
 	<ul class="PdfList post-list">
@@ -25,7 +29,7 @@
 				<?php $class[] = 'last' ?>
 			<?php endif ?>
 			<li class="<?php echo implode(' ', $class) ?>">
-				<div class="title"><?php $this->Pdf->postTitle($post) ?></div>
+				<div class="title"><?php $this->Pdf->postTitle($post, true, $options) ?></div>
 				<div class="date"><?php $this->Blog->postDate($post, 'Y.m.d') ?></div>
 			</li>
 		<?php endforeach; ?>

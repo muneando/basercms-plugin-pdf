@@ -61,8 +61,9 @@ class PdfConfigsController extends PdfAppController {
 		/* 認証設定 */
 		$this->BcAuth->allow(
 				'posts',
-				'ajax_postsForYear'
+				'ajax_getTitleList'
 		);
+		$this->Security->unlockedActions = array('ajax_getTitleList');
 
 		$this->BlogContent->recursive = -1;
 		if ($this->contentId) {
@@ -157,6 +158,13 @@ class PdfConfigsController extends PdfAppController {
 		}
 		unset($this->request->params['named']['template']);
 	
+		if (!empty($this->params['named']['target'])) {
+			$target = $this->request->params['named']['target'];
+		} else {
+			$target = null;
+		}
+		unset($this->request->params['named']['target']);
+		
 		$this->layout = null;
 		$this->contentId = $blogContentId;
 		
@@ -193,6 +201,7 @@ class PdfConfigsController extends PdfAppController {
 				$params
 		);
 		$this->set('posts', $datas);
+		$this->set('target', $target);
 		$this->render($this->blogContent['BlogContent']['template'] . DS . $template);
 	}
 	
@@ -244,10 +253,27 @@ class PdfConfigsController extends PdfAppController {
 		}
 	}
 	
-	public function ajax_postsForYear($blogContentId, $year) {
-		$this->layout = 'ajax';		
-		$options = array('year' => $year);
+	public function ajax_getTitleList($blogContentId) {
+		if (!empty($this->params['named']['template'])) {
+			$template = $this->request->params['named']['template'];
+		} else {
+			$template = 'ajax_posts';
+		}
+		unset($this->request->params['named']['template']);
+		$this->layout = 'ajax';
+		$this->contentId = $blogContentId;
+		
+		$options = array();
+		if (isset($this->request->data['Year'])) {
+			$options['year'] = $this->request->data['Year'];
+		}
+		if (isset($this->request->data['Target'])) {
+			$options['target'] = $this->request->data['Target'];
+		}
+		
 		$url = array('admin' => false, 'plugin' => 'pdf', 'controller' => 'pdfConfigs', 'action' => 'posts');
 		$this->set('element', $this->requestAction($url, array('pass' => array($blogContentId, 0), 'named' => $options)));
+		$this->render($this->blogContent['BlogContent']['template'] . DS . $template);
+		
 	}
 }

@@ -49,10 +49,11 @@ $this->BcBaser->pdfTilteList($contentsName, [$num]，[$options])
 * int $num 記事件数。初期値：5。 0を指定するとすべての記事を表示します。
 * array $options 抽出条件を仮想配列で指定する。
  * year 年で抽出する。4桁の年を指定する。
+ * target リンクのターゲット指定をする。aタグのtarget属性と同じ動作をする。何も設定しないと、通常通り現在のウィンドウに表示し、指定するとその名前のウィンドウに（なければ生成して）表示する。_blankを指定すると新規のウィンドウに表示する。
 
 例）
 ```
-<?php $this->BcBaser->pdfTilteList('news', 10, array('year' => 2014)) ?>
+<?php $this->BcBaser->pdfTilteList('news', 10, array('year' => '2014', 'target' => 'hoge')) ?>
 ```
 
 ### Ajaxでの更新
@@ -60,31 +61,38 @@ $this->BcBaser->pdfTilteList($contentsName, [$num]，[$options])
 Ajaxでの更新を行うための年ごとにブログタイトルを取得するアクションを用意しました。
 
 ```
-/pdf/pdfConfigs/ajax_postsForYear/[コンテンツID]/[年]
+/pdf/pdfConfigs/ajax_getTitleList/[コンテンツID]
 ```
 
 * コンテンツID int ブログのコンテンツIDを指定します。
-* 年 int　抽出する年を指定します。
 
-例）年ごとのバックナンバーリンクを用意して、クリックするとタイトル一覧を更新します。
+POST送信するデータに以下を指定してください。
+
+* Year  string　抽出する年を指定します。
+* Taeget  string リンクのターゲット属性を指定します。
+
+例）2000年から今年までのバックナンバーリンクを用意して、クリックするとタイトル一覧を更新します。タイトルをクリックすると、別ウィンドウでPDFファイルをオープンします。
+
 ```
 <?php $this->Html->scriptStart(array('inline'=>false)); ?>
 $(function() {
 	$(".linkBackNumber").on('click', function(){
 		var year = $(this).attr('year');
 		$.ajax({
-			url: "/pdf/pdfConfigs/ajax_postsForYear/2/" + year,
+			url: "/pdf/pdfConfigs/ajax_getTitleList/1",
+			type: 'POST',
+			data: {'Year' : year, 'Target': 'hoge'},
 		}).done(function(data){
-			$('#AjaxList').html(data);
+			$('#HogeList').html(data);
 		}).fail(function(data){
 			alert('エラーが発生しました。');
 		});
 	});
 });
-<?php $this->Html->scriptEnd(); ?>
+ <?php $this->Html->scriptEnd(); ?>
 
-<div id="AjaxList">
-<?php $this->BcBaser->pdfTilteList('news', 0, array('year' => date("Y"))); ?>
+ <div id="HogeList">
+<?php $this->BcBaser->pdfTilteList('ir', 0, array('year' => date("Y"), 'target' => 'hoge')); ?>
 </div>
 
 <h3>バックナンバー</h3>
