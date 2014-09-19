@@ -210,7 +210,7 @@ class PdfController extends PdfAppController {
 			}
 			
 			if($showType == 'PDF') {
-				$this->_showPdf($blogPost['Pdf']['pdf_file']);
+				$this->_show($blogPost['Pdf']['pdf_file']);
 				return;
 			} if($showType == 'HTML') {
 				$this->redirect($blogUrl);
@@ -235,23 +235,34 @@ class PdfController extends PdfAppController {
 	}
 
 /**
- * PDFファイルの内容を表示する。
+ * ファイルの内容を表示する。
  * 
- * @param string $pdfFile
+ * @param string $fileName
  * @throws Exception
  */
-	private function _showPdf($pdfFile) {
+	private function _show($fileName) {
+		switch(trim(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)))) {
+			case 'pdf':
+				$contentType = 'application/pdf';
+				break;
+			case 'html':
+			case 'htm':
+				$contentType = 'text/html';
+				break;
+			default:
+				throw new Exception('コンテンツタイプが見つかりませんでした。');
+		}
+		
 		$this->autoRender = false; // Viewを使わないように
 		Configure::write('debug', 0); // debugコードを出さないように
-		$path_name = Configure::read('Pdf.upload_dir') . $pdfFile;
+		$path_name = Configure::read('Pdf.upload_dir') . $fileName;
 		if( is_file($path_name) ){
 			$fp = fopen($path_name, 'rb');
 			$pdf = fread($fp, filesize($path_name));
-			// ダウンロードさせるファイルに応じたヘッダ情報を出力
-			header ("Content-type: application/pdf;"); // この例はPDFファイル
-			header("Content-disposition: inline; filename=" . $pdfFile);
+			header ("Content-type: $contentType;"); 
+			header("Content-disposition: inline; filename=" . $fileName);
 		} else {
-			throw new Exception('PDFファイルが見つかりませんでした。');
+			throw new Exception('ファイルが見つかりませんでした。');
 		}
 		print($pdf); // 出力
 		
