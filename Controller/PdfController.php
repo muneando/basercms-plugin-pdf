@@ -210,7 +210,7 @@ class PdfController extends PdfAppController {
 			}
 			
 			if($showType == 'PDF') {
-				$this->_show($blogPost['Pdf']['pdf_file']);
+				$this->_show(trim($blogPost['Pdf']['pdf_file']));
 				return;
 			} if($showType == 'HTML') {
 				$this->redirect($blogUrl);
