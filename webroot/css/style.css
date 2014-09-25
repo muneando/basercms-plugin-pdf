@@ -1,0 +1,35 @@
+/* 
+    Created on : 2014/09/25, 21:45:55
+    Author     : ando
+*/
+@charset "UTF-8";
+
+/* PDFリンク
+---------------------------------------------------*/
+.PdfList{
+	margin-left: 15px;
+}
+.PdfList li{
+	list-style:none;
+	background-image: url('/theme/oricon/img/pdficonsmall.gif');
+	background-repeat: no-repeat;
+	padding: 5px 0px 5px 30px;
+	margin: 10px 0;
+	vertical-align: middle;
+}
+.PdfList .title{
+	display: inline;
+}
+.PdfList .date{
+	display: inline;
+	margin-left: 10px;
+}
+.PdfList .date:before{
+	content:"(";
+}
+.PdfList .date:after{
+	content:")";
+}
+
+
+
