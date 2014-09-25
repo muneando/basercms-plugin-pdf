@@ -11,9 +11,9 @@
 }
 .PdfList li{
 	list-style:none;
-	background-image: url('/theme/oricon/img/pdficonsmall.gif');
+	background-image: url('/Pdf/img/pdficon_large.png');
 	background-repeat: no-repeat;
-	padding: 5px 0px 5px 30px;
+	padding: 12px 0px 10px 40px;
 	margin: 10px 0;
 	vertical-align: middle;
 }
