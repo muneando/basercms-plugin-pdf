@@ -11,11 +11,16 @@
 }
 .PdfList li{
 	list-style:none;
-	background-image: url('/Pdf/img/pdficon_large.png');
 	background-repeat: no-repeat;
 	padding: 12px 0px 10px 40px;
 	margin: 10px 0;
 	vertical-align: middle;
+}
+.PdfList li.pdf{
+	background-image: url('/Pdf/img/pdficon_large.png');
+}
+.PdfList li.html{
+	background-image: url('/Pdf/img/file_html.png');
 }
 .PdfList .title{
 	display: inline;

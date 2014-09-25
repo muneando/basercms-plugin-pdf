@@ -22,13 +22,13 @@ if($target) {
 <?php if ($posts): ?>
 	<ul class="PdfList post-list">
 		<?php foreach ($posts as $key => $post): ?>
-			<?php $class = array('post-' . ($key + 1)) ?>
+  			<?php $class = array('post-' . ($key + 1)) ?>
 			<?php if ($this->BcArray->first($posts, $key)): ?>
 				<?php $class[] = 'first' ?>
 			<?php elseif ($this->BcArray->last($posts, $key)): ?>
 				<?php $class[] = 'last' ?>
 			<?php endif ?>
-			<li class="<?php echo implode(' ', $class) ?>">
+ 			<li class="<?php echo implode(' ', $class) ?> <?php echo $this->Pdf->getFileType($post['Pdf']['pdf_file']); ?>">
 				<div class="title"><?php $this->Pdf->postTitle($post, true, $options) ?></div>
 				<div class="date"><?php $this->Blog->postDate($post, 'Y.m.d') ?></div>
 			</li>

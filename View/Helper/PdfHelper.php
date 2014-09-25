@@ -107,4 +107,24 @@ class PdfHelper extends AppHelper {
 		$url = array('admin' => false, 'plugin' => 'pdf', 'controller' => 'pdf', 'action' => 'show', $post['BlogPost']['blog_content_id'], $post['BlogPost']['id']);
 		return $this->BcBaser->getLink($title, $url, $options);
 	}
+    
+    /**
+     * ファイル名からファイル種別（PDF or HTML）かを判定する。
+     * 
+     * @param type $fileName
+     * @return string
+     */
+    public function getFileType($fileName) {
+		$pathInfo = pathinfo($fileName);
+		$extension = trim($pathInfo['extension']);
+		if ($extension === 'pdf') {
+			return 'pdf';
+		}
+		if ($extension === 'html' || $extension === 'htm') {
+			return 'html';
+		}
+		
+        
+    
+    }
 }
