@@ -113,7 +113,7 @@ class PdfAppController extends BcPluginAppController {
  * @param int $id
  * @return void
  */
-	public function admin_edit($id = null) {
+	public function admin_edit($content_id, $id = null) {
 	}
 	
 /**
