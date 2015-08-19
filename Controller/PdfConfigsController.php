@@ -93,7 +93,7 @@ class PdfConfigsController extends PdfAppController {
  * @param int $id
  * @return void
  */
-	public function admin_edit($id = null) {
+	public function admin_edit($content_id, $id = null) {
 		$this->pageTitle = $this->adminTitle . '編集';
 		parent::admin_edit($id);
 	}
